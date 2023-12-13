@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Console\Commands;
-
+use App\AttPunch;
 use Illuminate\Console\Command;
 
 class get_attendance extends Command
