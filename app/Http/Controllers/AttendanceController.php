@@ -9,12 +9,11 @@ class AttendanceController extends Controller
     public function index()
     {
         $name = config('app.name');
+        $system = config('app.system');
         $client = new \GuzzleHttp\Client();
         $request = $client->get('https://hris.wsystem.online/api/get-last-id/'.$name);
         $response = json_decode($request->getBody());
-        $attendances = AttPunch::with('employee','terminal_info')->where('id','>',$response->id)->orderBy('id','asc')->get()->take(200);
-
-        
+        $attendances = AttPunch::with('employee','terminal_info')->where('id','>',$response->id)->orderBy('id','asc')->get()->take(300);
         $requestContent = [
             'headers' => [
                 'Accept' => 'application/json',
@@ -27,13 +26,9 @@ class AttendanceController extends Controller
         ];
         $client = new \GuzzleHttp\Client();
 
-        // $apiRequest = $client->request('POST', 'https://hris.wsystem.online/api/save-attendance', $requestContent);
-        $apiRequest = $client->request('POST', 'http://localhost/hris_payroll/public/api/save-attendance', $requestContent);
+        $apiRequest = $client->request('POST', $system, $requestContent);
 
         $response = json_decode($apiRequest->getBody());
-
-        dd($response);
-        
       
     }
 }
