@@ -14,7 +14,7 @@ class AttendanceController extends Controller
         $client = new \GuzzleHttp\Client();
         $request = $client->get('https://hris.wsystem.online/api/get-last-id/'.$name);
         $response = json_decode($request->getBody());
-        $attendances = AttPunch::with('employee','terminal_info')->where('id','>',$response->id)->orderBy('id','asc')->get()->take(300);
+        $attendances = AttPunch::with('employee','terminal_info')->where('id','>',$response->id)->orderBy('id','asc')->get()->take(100);
         $requestContent = [
             'headers' => [
                 'Accept' => 'application/json',
