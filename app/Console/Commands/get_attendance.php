@@ -37,6 +37,7 @@ class get_attendance extends Command
      */
     public function handle()
     {
+        ini_set('memory_limit', '-1');
         //
         info("START Get Attendance");
         $name = config('app.name');
