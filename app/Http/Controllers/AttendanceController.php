@@ -9,6 +9,7 @@ class AttendanceController extends Controller
     public function index()
     {
         $name = config('app.name');
+        
         $system = config('app.system');
         $client = new \GuzzleHttp\Client();
         $request = $client->get('https://hris.wsystem.online/api/get-last-id/'.$name);
@@ -26,7 +27,7 @@ class AttendanceController extends Controller
         ];
         $client = new \GuzzleHttp\Client();
 
-        $apiRequest = $client->request('POST', $system, $requestContent);
+        $apiRequest = $client->request('POST', $system."/save-attendance", $requestContent);
 
         $response = json_decode($apiRequest->getBody());
       
