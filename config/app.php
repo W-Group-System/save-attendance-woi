@@ -15,6 +15,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
     'system' => env('APP_SYSTEM', 'Laravel'),
+    'location' => env('LOCATION', 'Laravel'),
+    'address' => env('ADDRESS', 'Laravel'),
 
     /*
     |--------------------------------------------------------------------------

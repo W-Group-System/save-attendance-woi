@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 use App\AttPunch;
+use Rats\Zkteco\Lib\ZKTeco;
 use Illuminate\Console\Command;
 
 class get_attendance extends Command
@@ -40,27 +41,38 @@ class get_attendance extends Command
         ini_set('memory_limit', '-1');
         //
         info("START Get Attendance");
+        $location = config('app.location');
+        $address = explode(',',config('app.address'));
         $name = config('app.name');
-        $system = config('app.system');
-        $client = new \GuzzleHttp\Client();
-        $request = $client->get($system."/get-last-id/".$name);
-        $response = json_decode($request->getBody());
-        $attendances = AttPunch::with('employee','terminal_info')->where('id','>',$response->id)->orderBy('id','asc')->get()->take(100);
-        $requestContent = [
-            'headers' => [
-                'Accept' => 'application/json',
-                'Content-Type' => 'application/json'
-            ],
-            'json' => [ 
-                'data' => $attendances->toArray(),
-                'location' => $name,
-            ]
-        ];
-        $client = new \GuzzleHttp\Client();
+        foreach($address as $add)
+        {
+            $zk = new ZKTeco($add);
+            $zk->connect();   
+            $zk->getAttendance();
+            $system = config('app.system');
+            $attendances = collect($zk->getAttendance());
+            $client = new \GuzzleHttp\Client();
+            $request = $client->get($system."/get-last-id/".$name);
+            $response = json_decode($request->getBody());
+            $attendances = $attendances->where('timestamp','>=',$response->id);
+            $requestContent = [
+                'headers' => [
+                    'Accept' => 'application/json',
+                    'Content-Type' => 'application/json'
+                ],
+                'json' => [ 
+                    'data' => $attendances->toArray(),
+                    'location' => $name,
+                    'ip_address' => $add
+                ]
+            ];
+            $client = new \GuzzleHttp\Client();
+    
+            $apiRequest = $client->request('POST', $system."/save-attendance", $requestContent);
+    
+            $response = json_decode($apiRequest->getBody());
+        }
 
-        $apiRequest = $client->request('POST', $system."/save-attendance", $requestContent);
-
-        $response = json_decode($apiRequest->getBody());
         info("End Get Attendance");
         return "success";
     }
