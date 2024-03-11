@@ -62,7 +62,7 @@ class get_attendance extends Command
             }
             else
             {
-                $attendances = $attendances->where('timestamp','>=',date('Y-m-d 00:00:00'))->take(200);
+                $attendances = $attendances->where('timestamp','>=',date('Y-m-d 00:00:00',strtotime('2024-02-15')))->take(200);
             }
             $requestContent = [
                 'headers' => [
