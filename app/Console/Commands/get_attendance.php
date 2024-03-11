@@ -80,6 +80,7 @@ class get_attendance extends Command
             $apiRequest = $client->request('POST', $system."/save-attendance", $requestContent);
     
             $response = json_decode($apiRequest->getBody());
+            $zk->disconnect();   
         }
 
         info("End Get Attendance");
