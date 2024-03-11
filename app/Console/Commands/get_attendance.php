@@ -58,11 +58,11 @@ class get_attendance extends Command
             if($response->id)
             {
 
-                $attendances = $attendances->where('timestamp','>=',$response->id);
+                $attendances = $attendances->where('timestamp','>=',$response->id)->take(200);
             }
             else
             {
-                $attendances = $attendances->where('timestamp','>=',date('Y-m-d 00:00:00'));
+                $attendances = $attendances->where('timestamp','>=',date('Y-m-d 00:00:00'))->take(200);
             }
             $requestContent = [
                 'headers' => [
