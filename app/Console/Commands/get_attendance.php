@@ -52,9 +52,18 @@ class get_attendance extends Command
             $system = config('app.system');
             $attendances = collect($zk->getAttendance());
             $client = new \GuzzleHttp\Client();
-            $request = $client->get($system."/get-last-id/".$name);
+            $request = $client->get($system."/get-last-id/".$add);
+            
             $response = json_decode($request->getBody());
-            $attendances = $attendances->where('timestamp','>=',$response->id);
+            if($response->id)
+            {
+
+                $attendances = $attendances->where('timestamp','>=',$response->id);
+            }
+            else
+            {
+                $attendances = $attendances->where('timestamp','>=',date('Y-m-d 00:00:00'));
+            }
             $requestContent = [
                 'headers' => [
                     'Accept' => 'application/json',
