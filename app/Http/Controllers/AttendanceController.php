@@ -14,6 +14,7 @@ class AttendanceController extends Controller
         //
         info("START Get Attendance");
         $location = config('app.location');
+        dd($location);
         $address = explode(',',config('app.address'));
         $name = config('app.name');
         foreach($address as $add)
