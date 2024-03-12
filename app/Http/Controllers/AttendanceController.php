@@ -71,6 +71,7 @@ class AttendanceController extends Controller
     }
     public function dept()
     {
+        info("START Get Attendance");
         $location = config('app.location');
         $address = explode(',',config('app.address'));
         $name = config('app.name');
@@ -112,6 +113,8 @@ class AttendanceController extends Controller
             $response = json_decode($apiRequest->getBody());
             $zk->disconnect();   
         }
+        
+        info("End Get Attendance");
 
     }
 }
