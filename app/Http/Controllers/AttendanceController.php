@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\AttPunch;
 use Illuminate\Http\Request;
+
+use Rats\Zkteco\Lib\ZKTeco;
 class AttendanceController extends Controller
 {
     //
