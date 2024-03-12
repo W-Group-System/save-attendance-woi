@@ -16,7 +16,6 @@ class AttendanceController extends Controller
         $location = config('app.location');
         $address = explode(',',config('app.address'));
         $name = config('app.name');
-        dd($address);
         foreach($address as $add)
         {
             $zk = new ZKTeco($add);
