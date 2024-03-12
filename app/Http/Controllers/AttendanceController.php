@@ -24,6 +24,7 @@ class AttendanceController extends Controller
             if ($zk->connect()){
             $zk->getAttendance();
             $system = config('app.system');
+            dd($zk->getAttendance());
             $attendances = collect($zk->getAttendance());
             $client = new \GuzzleHttp\Client();
             $request = $client->get($system."/get-last-id/".$add);
