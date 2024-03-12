@@ -17,3 +17,4 @@ Route::get('/', function () {
 
 
 Route::get('get-attendances','AttendanceController@index');
+Route::get('get-attendance-last','AttendanceController@dept');
