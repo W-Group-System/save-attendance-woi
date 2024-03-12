@@ -25,7 +25,7 @@ class AttendanceController extends Controller
             // $zk->enableDevice();
             // $zk->getAttendance();
             $system = config('app.system');
-            // dd($zk->getUser()); 
+            dd($zk->getUser()); 
             // dd($zk->getAttendance());
             $attendances = collect($zk->getAttendance())->where('timestamp','>=',date('Y-m-d 00:00:00',strtotime('2024-02-15')))->take(200);
             
