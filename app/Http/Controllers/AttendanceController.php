@@ -18,7 +18,7 @@ class AttendanceController extends Controller
         $name = config('app.name');
         foreach($address as $add)
         {
-            $zk = new ZKTeco($add);
+            $zk = new ZKTeco($add,4370);
             $zk->connect();   
             $zk->getAttendance();
             $system = config('app.system');
