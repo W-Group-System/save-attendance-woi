@@ -16,10 +16,11 @@ class AttendanceController extends Controller
         $location = config('app.location');
         $address = explode(',',config('app.address'));
         $name = config('app.name');
+        dd($name);
         foreach($address as $add)
         {
             
-            $zk = new ZKTeco($add,4370);
+            $zk = new ZKTeco($add);
             if ($zk->connect()){
             $zk->connect();   
             $zk->getAttendance();
