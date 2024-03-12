@@ -84,7 +84,7 @@ class AttendanceController extends Controller
             $request = $client->get($system."/get-last-id/".$add);
             
             $response = json_decode($request->getBody());
-            dd($response);
+            // dd($response);
             if($response->id)
             {
 
