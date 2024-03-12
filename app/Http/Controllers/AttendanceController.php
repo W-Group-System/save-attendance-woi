@@ -22,7 +22,7 @@ class AttendanceController extends Controller
             $zk = new ZKTeco($add);
             
             if ($zk->connect()){
-            $zk->enableDevice();
+            // $zk->enableDevice();
             // $zk->getAttendance();
             $system = config('app.system');
             dd($zk->getUser()); 
