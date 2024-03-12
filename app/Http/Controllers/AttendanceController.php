@@ -8,28 +8,50 @@ class AttendanceController extends Controller
     //
     public function index()
     {
+        ini_set('memory_limit', '-1');
+        //
+        info("START Get Attendance");
+        $location = config('app.location');
+        $address = explode(',',config('app.address'));
         $name = config('app.name');
-        
-        $system = config('app.system');
-        $client = new \GuzzleHttp\Client();
-        $request = $client->get('https://hris.wsystem.online/api/get-last-id/'.$name);
-        $response = json_decode($request->getBody());
-        $attendances = AttPunch::with('employee','terminal_info')->where('id','>',$response->id)->orderBy('id','asc')->get()->take(100);
-        $requestContent = [
-            'headers' => [
-                'Accept' => 'application/json',
-                'Content-Type' => 'application/json'
-            ],
-            'json' => [ 
-                'data' => $attendances->toArray(),
-                'location' => $name,
-            ]
-        ];
-        $client = new \GuzzleHttp\Client();
+        foreach($address as $add)
+        {
+            $zk = new ZKTeco($add);
+            $zk->connect();   
+            $zk->getAttendance();
+            $system = config('app.system');
+            $attendances = collect($zk->getAttendance());
+            $client = new \GuzzleHttp\Client();
+            $request = $client->get($system."/get-last-id/".$add);
+            
+            $response = json_decode($request->getBody());
+            if($response->id)
+            {
 
-        $apiRequest = $client->request('POST', $system."/save-attendance", $requestContent);
-
-        $response = json_decode($apiRequest->getBody());
-      
+                $attendances = $attendances->where('timestamp','>=',$response->id)->take(200);
+            }
+            else
+            {
+                $attendances = $attendances->where('timestamp','>=',date('Y-m-d 00:00:00',strtotime('2024-02-15')))->take(200);
+            }
+            $requestContent = [
+                'headers' => [
+                    'Accept' => 'application/json',
+                    'Content-Type' => 'application/json'
+                ],
+                'json' => [ 
+                    'data' => $attendances->toArray(),
+                    'location' => $name,
+                    'ip_address' => $add
+                ]
+            ];
+            $client = new \GuzzleHttp\Client();
+    
+            $apiRequest = $client->request('POST', $system."/save-attendance", $requestContent);
+    
+            $response = json_decode($apiRequest->getBody());
+            $zk->disconnect();   
+        }
+        return "renz";
     }
 }
