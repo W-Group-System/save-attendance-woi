@@ -25,7 +25,7 @@ class AttendanceController extends Controller
             $zk->getAttendance();
             $system = config('app.system');
             dd($zk->getAttendance());
-            $attendances = collect($zk->getAttendance());
+            $attendances = collect($zk->getAttendance())->where('timestamp','>=',date('Y-m-d 00:00:00',strtotime('2024-02-15')))->take(200);
             $client = new \GuzzleHttp\Client();
             $request = $client->get($system."/get-last-id/".$add);
             
