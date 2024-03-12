@@ -21,9 +21,7 @@ class AttendanceController extends Controller
             
             $zk = new ZKTeco($add);
             
-            dd($zk->connect());
             if ($zk->connect()){
-            $zk->connect();   
             $zk->getAttendance();
             $system = config('app.system');
             $attendances = collect($zk->getAttendance());
