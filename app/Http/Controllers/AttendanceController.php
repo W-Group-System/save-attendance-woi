@@ -89,12 +89,13 @@ class AttendanceController extends Controller
             if($response->id)
             {
 
-                $attendances = collect($zk->getAttendance())->where('timestamp','>=',$response->id)->take(200);
+                $attendances = collect($zk->getAttendance())->where('timestamp','>=',$response->id)->take(100);
             }
             else
             {
                 $attendances = collect($zk->getAttendance())->where('timestamp','>=',date('Y-m-d 00:00:00',strtotime('2024-02-15')))->take(200);
             }
+            dd($attendances);
             $requestContent = [
                 'headers' => [
                     'Accept' => 'application/json',
