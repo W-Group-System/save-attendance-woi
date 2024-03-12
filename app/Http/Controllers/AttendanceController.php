@@ -80,7 +80,6 @@ class AttendanceController extends Controller
             $zk->connect();   
             $zk->getAttendance();
             $system = config('app.system');
-            $attendances = collect($zk->getAttendance());
             $client = new \GuzzleHttp\Client();
             $request = $client->get($system."/get-last-id/".$add);
             
@@ -89,11 +88,11 @@ class AttendanceController extends Controller
             if($response->id)
             {
 
-                $attendances = $attendances->where('timestamp','>=',$response->id)->take(200);
+                $attendances = collect($zk->getAttendance())->where('timestamp','>=',$response->id)->take(200);
             }
             else
             {
-                $attendances = $attendances->where('timestamp','>=',date('Y-m-d 00:00:00',strtotime('2024-02-15')))->take(200);
+                $attendances = collect($zk->getAttendance())->where('timestamp','>=',date('Y-m-d 00:00:00',strtotime('2024-02-15')))->take(200);
             }
             $requestContent = [
                 'headers' => [
