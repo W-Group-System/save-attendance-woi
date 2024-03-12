@@ -89,7 +89,7 @@ class AttendanceController extends Controller
             if($response->id)
             {
 
-                $attendances = collect($zk->getAttendance())->where('timestamp','>=',$response->id)->take(100);
+                $attendances = collect($zk->getAttendance())->where('timestamp','>=',$response->id)->take(200);
             }
             else
             {
