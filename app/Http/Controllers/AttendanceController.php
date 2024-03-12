@@ -22,15 +22,17 @@ class AttendanceController extends Controller
             $zk = new ZKTeco($add);
             
             if ($zk->connect()){
+            $zk->enableDevice();
             $zk->getAttendance();
             $system = config('app.system');
             // dd($zk->getAttendance());
             $attendances = collect($zk->getAttendance())->where('timestamp','>=',date('Y-m-d 00:00:00',strtotime('2024-02-15')))->take(200);
+            
+            dd($attendances);
             $client = new \GuzzleHttp\Client();
             $request = $client->get($system."/get-last-id/".$add);
             
             $response = json_decode($request->getBody());
-            dd($response);
             if($response->id)
             {
 
