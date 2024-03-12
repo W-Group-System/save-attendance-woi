@@ -18,7 +18,9 @@ class AttendanceController extends Controller
         $name = config('app.name');
         foreach($address as $add)
         {
+            
             $zk = new ZKTeco($add,4370);
+            if ($zk->connect()){
             $zk->connect();   
             $zk->getAttendance();
             $system = config('app.system');
@@ -54,6 +56,12 @@ class AttendanceController extends Controller
     
             $response = json_decode($apiRequest->getBody());
             $zk->disconnect();   
+            }
+            else
+            {
+                return "renz";
+            }
+
         }
         return "renz";
     }
