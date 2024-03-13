@@ -63,7 +63,7 @@ class AttendanceController extends Controller
             }
             else
             {
-                return "renz";
+                return "renz-errorconnection";
             }
 
         }
