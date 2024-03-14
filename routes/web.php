@@ -18,3 +18,4 @@ Route::get('/', function () {
 
 Route::get('get-attendances','AttendanceController@index');
 Route::get('get-attendance-last','AttendanceController@dept');
+Route::get('get-users','AttendanceController@get_users');

@@ -117,4 +117,17 @@ class AttendanceController extends Controller
         info("End Get Attendance");
 
     }
+    public function get_users()
+    {
+        $location = config('app.location');
+        $address = explode(',',config('app.address'));
+        $name = config('app.name');
+        foreach($address as $add)
+        {
+            $zk = new ZKTeco($add);
+            $zk->getUser(); 
+            dd($zk);
+        }
+
+    }
 }
