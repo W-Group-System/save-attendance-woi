@@ -107,10 +107,10 @@ class AttendanceController extends Controller
                     'ip_address' => $add
                 ]
             ];
-            dd($requestContent);
             $client = new \GuzzleHttp\Client();
     
             $apiRequest = $client->request('POST', $system."/save-attendance", $requestContent);
+            dd($apiRequest);
             $zk->disconnect();   
         }
         
