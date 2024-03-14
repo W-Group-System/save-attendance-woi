@@ -125,6 +125,7 @@ class AttendanceController extends Controller
         foreach($address as $add)
         {
             $zk = new ZKTeco($add);
+            $zk->connect();
             $zk->getUser(); 
             dd($zk);
         }
