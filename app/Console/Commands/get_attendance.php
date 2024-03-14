@@ -48,7 +48,6 @@ class get_attendance extends Command
         {
             $zk = new ZKTeco($add);
             $zk->connect();   
-            $zk->getAttendance();
             $system = config('app.system');
             $attendances = collect($zk->getAttendance());
             $client = new \GuzzleHttp\Client();
