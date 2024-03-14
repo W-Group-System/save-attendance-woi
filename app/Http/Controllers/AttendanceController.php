@@ -127,7 +127,7 @@ class AttendanceController extends Controller
             $zk = new ZKTeco($add);
             $zk->connect();
             $zk->getUser(); 
-            dd($zk);
+            dd( $zk->getUser());
         }
 
     }
