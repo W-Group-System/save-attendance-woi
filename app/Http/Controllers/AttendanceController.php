@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\AttPunch;
 use Illuminate\Http\Request;
+use App\Vms;
 
 use Rats\Zkteco\Lib\ZKTeco;
 class AttendanceController extends Controller
@@ -10,39 +11,24 @@ class AttendanceController extends Controller
     //
     public function index()
     {
-        ini_set('memory_limit', '-1');
-        //
-        info("START Get Attendance");
         $location = config('app.location');
         $address = explode(',',config('app.address'));
         $name = config('app.name');
         foreach($address as $add)
         {
-            
-            //  dd($zk->connect());
-            $zk = new ZKTeco($add);
-            // dd($zk->connect());
-            if ($zk->connect()){
-            // $zk->enableDevice();
-            // $zk->getAttendance();
             $system = config('app.system');
-            // dd($zk->getUser()); 
-            // dd($zk->getAttendance());
-            $attendances = collect($zk->getAttendance())->where('timestamp','>=',date('Y-m-d 00:00:00',strtotime('2024-02-15')))->take(100);
-            
-            dd($attendances);
             $client = new \GuzzleHttp\Client();
-            $request = $client->get($system."/get-last-id/".$add);
+            $request = $client->get($system."/get-last-id-hk/".$add);
             
             $response = json_decode($request->getBody());
             if($response->id)
             {
 
-                $attendances = $attendances->where('timestamp','>=',$response->id)->take(200);
+                $attendances = Vms::where('time_input',)->where('last_id','>=',$response->id)->orderBy('id','desc')->get()->take(100);
             }
             else
             {
-                $attendances = $attendances->where('timestamp','>=',date('Y-m-d 00:00:00',strtotime('2024-02-15')))->take(200);
+                $attendances = Vms::where('date_time','>=',date('Y-m-d 00:00:00',strtotime('2024-02-15')))->orderBy('id','desc')->get()->take(100);
             }
             $requestContent = [
                 'headers' => [
@@ -57,18 +43,11 @@ class AttendanceController extends Controller
             ];
             $client = new \GuzzleHttp\Client();
     
-            $apiRequest = $client->request('POST', $system."/save-attendance", $requestContent);
+            $apiRequest = $client->request('POST', $system."/save-attendance-hk", $requestContent);
     
             $response = json_decode($apiRequest->getBody());
-            $zk->disconnect();   
-            }
-            else
-            {
-                return "renz-errorconnection";
-            }
-
         }
-        return "renz";
+
     }
     public function dept()
     {

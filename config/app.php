@@ -17,6 +17,7 @@ return [
     'system' => env('APP_SYSTEM', 'Laravel'),
     'location' => env('LOCATION', 'Laravel'),
     'address' => env('ADDRESS', 'Laravel'),
+    'device' => env('APP_DEVICE', 'Laravel'),
 
     /*
     |--------------------------------------------------------------------------
