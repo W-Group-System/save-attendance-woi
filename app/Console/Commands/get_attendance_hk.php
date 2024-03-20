@@ -54,11 +54,11 @@ class get_attendance_hk extends Command
             if($response->id)
             {
 
-                $attendances = Vms::where('time_input',)->where('last_id','>=',$response->id)->orderBy('id','desc')->get()->take(100);
+                $attendances = Vms::where('timpue_input','!=',null)->where('last_id','>=',$response->id)->orderBy('id','desc')->get()->take(200);
             }
             else
             {
-                $attendances = Vms::where('date_time','>=',date('Y-m-d 00:00:00',strtotime('2024-02-15')))->orderBy('id','desc')->get()->take(100);
+                $attendances = Vms::where('date_input','>=',date('Y-m-d',strtotime('2024-02-15')))->orderBy('id','desc')->get()->take(200);
             }
             $requestContent = [
                 'headers' => [
