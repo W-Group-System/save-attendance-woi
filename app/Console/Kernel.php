@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
         if(config('app.device') == "HIK")
         {
             $schedule->command('command:get_attendance_hk')->everyMinute();
-            $schedule->command('command:store_attendance')->everyMinute();
+            $schedule->command('command:send_attendance')->everyMinute();
         }
         else{
             $schedule->command('command:get_attendance')->everyMinute();
