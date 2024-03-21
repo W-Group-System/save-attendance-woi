@@ -84,7 +84,7 @@ class send_attendance extends Command
                     if($attendance_in ==  null)
                     {
                         $attendance = new Attendance;
-                        $attendance->employee_code  = $att->caremp_coded;   
+                        $attendance->employee_code  = $att->emp_code;   
                         $attendance->time_out = date('Y-m-d H:i:s', strtotime($att->datetime));
                         $attendance->device_out = $att->location ." - ".$att->ip_address;
                         $attendance->last_id = $att->id;
