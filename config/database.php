@@ -55,6 +55,21 @@ return [
             'strict' => true,
             'engine' => null,
         ],
+        'mysql_hris' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST_HRIS', '127.0.0.1'),
+            'port' => env('DB_PORT', '3306'),
+            'database' => env('DB_DATABASE_HRIS', 'forge'),
+            'username' => env('DB_USERNAME_HRIS', 'forge'),
+            'password' => env('DB_PASSWORD_HRIS', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+        ],
 
         'pgsql' => [
             'driver' => 'pgsql',
