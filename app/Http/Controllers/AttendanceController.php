@@ -114,16 +114,18 @@ class AttendanceController extends Controller
     }
     public function store_attendance()
     {
+        ini_set('memory_limit', '-1');
         $attendance = Attendance::orderBy('last_id','desc')->first();
 
         if($attendance == null)
         {
-            $attendances = AttendanceLog::orderBy('id','asc')->get()->take(1000);
+            $attendances = AttendanceLog::orderBy('id','asc')->get()->take(300);
         }
         else
         {
-            $attendances = AttendanceLog::where('id','>',$attendance->last_id)->orderBy('id','asc')->get()->take(1000);
+            $attendances = AttendanceLog::where('id','>',$attendance->last_id)->orderBy('id','asc')->get();
         }
+        // dd($attendances);
         foreach($attendances as $att)
         {
                 if($att->type == 0)
@@ -139,7 +141,7 @@ class AttendanceController extends Controller
                         $attendance->save();
                     }
                 }
-                else if($att->type == "HO Out")
+                else
                 {
                     $time_in_after = date('Y-m-d H:i:s',strtotime($att->datetime));
                     $time_in_before = date('Y-m-d H:i:s', strtotime ( '-23 hour' , strtotime ( $time_in_after ) )) ;
@@ -159,7 +161,7 @@ class AttendanceController extends Controller
                     if($attendance_in ==  null)
                     {
                         $attendance = new Attendance;
-                        $attendance->employee_code  = $att->caremp_coded;   
+                        $attendance->employee_code  = $att->emp_code;   
                         $attendance->time_out = date('Y-m-d H:i:s', strtotime($att->datetime));
                         $attendance->device_out = $att->location ." - ".$att->ip_address;
                         $attendance->last_id = $att->id;
