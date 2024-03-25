@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Console\Commands;
-
+use App\Attendance;
+use App\AttendanceLog;
 use Illuminate\Console\Command;
 
 class send_attendance extends Command
