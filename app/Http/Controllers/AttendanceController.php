@@ -172,4 +172,10 @@ class AttendanceController extends Controller
           
         }
     }
+    public function lastId()
+    {
+        $visitor = Visitor::orderBy('id','desc')->first();
+
+        return $visitor->id;
+    }
 }
