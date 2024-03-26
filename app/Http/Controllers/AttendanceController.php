@@ -32,7 +32,7 @@ class AttendanceController extends Controller
             {
                 $attendances = Vms::where('date_time','>=',date('Y-m-d 00:00:00',strtotime('2024-02-15')))->orderBy('id','desc')->get();
             }
-            // dd($attendances);
+            dd($response->id);
             $requestContent = [
                 'headers' => [
                     'Accept' => 'application/json',
