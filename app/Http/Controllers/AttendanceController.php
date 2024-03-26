@@ -26,7 +26,7 @@ class AttendanceController extends Controller
             if($response->id)
             {
 
-                $attendances = Vms::where('time_input','!=',"00:00:00")->where('id','>=',$response->id)->orderBy('id','desc')->get();
+                $attendances = Vms::where('time_input','!=',"00:00:00")->where('id','>=',$response->id)->orderBy('id','asc')->get();
             }
             else
             {
