@@ -26,13 +26,13 @@ class AttendanceController extends Controller
             if($response->id)
             {
 
-                $attendances = Vms::where('time_input',)->where('id','>=',$response->id)->orderBy('id','desc')->get();
+                $attendances = Vms::where('time_input','!=',"00:00:00")->where('id','>=',$response->id)->orderBy('id','desc')->get();
             }
             else
             {
-                $attendances = Vms::where('date_time','>=',date('Y-m-d 00:00:00',strtotime('2024-02-15')))->orderBy('id','desc')->get();
+                $attendances = Vms::where('time_input','!=',"00:00:00")->where('date_time','>=',date('Y-m-d 00:00:00',strtotime('2024-02-15')))->orderBy('id','desc')->get();
             }
-            dd($response->id);
+            // dd($response->id);
             $requestContent = [
                 'headers' => [
                     'Accept' => 'application/json',
