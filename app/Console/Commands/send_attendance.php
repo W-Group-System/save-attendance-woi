@@ -68,7 +68,7 @@ class send_attendance extends Command
                 else
                 {
                     $time_in_after = date('Y-m-d H:i:s',strtotime($att->datetime));
-                    $time_in_before = date('Y-m-d H:i:s', strtotime ( '-23 hour' , strtotime ( $time_in_after ) )) ;
+                    $time_in_before = date('Y-m-d H:i:s', strtotime ( '-16 hour' , strtotime ( $time_in_after ) )) ;
                     $update = [
                         'time_out' =>  date('Y-m-d H:i:s', strtotime($att->datetime)),
                         'device_out' => $att->location ." - ".$att->ip_address,
