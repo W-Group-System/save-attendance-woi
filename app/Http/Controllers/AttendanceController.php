@@ -67,7 +67,7 @@ class AttendanceController extends Controller
             $request = $client->get($system."/get-last-id/".$add);
             
             $response = json_decode($request->getBody());
-            dd($response);
+            // dd($response);
             if($response->id != 0)
             {
 
@@ -77,7 +77,7 @@ class AttendanceController extends Controller
             {
                 $attendances = collect($zk->getAttendance())->where('timestamp','>=',date('Y-m-d 00:00:00',strtotime('2024-02-15')))->take(100);
             }
-            
+            dd($attendances);
             $requestContent = [
                 'headers' => [
                     'Accept' => 'application/json',
