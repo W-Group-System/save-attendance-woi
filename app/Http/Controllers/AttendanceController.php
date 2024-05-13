@@ -71,11 +71,11 @@ class AttendanceController extends Controller
             if($response->id != 0)
             {
 
-                $attendances = collect($zk->getAttendance())->where('timestamp','>=',$response->id)->take(100);
+                $attendances = collect($zk->getAttendance())->where('timestamp','>=',$response->id)->take(500);
             }
             else
             {
-                $attendances = collect($zk->getAttendance())->where('timestamp','>=',date('Y-m-d 00:00:00',strtotime('2024-02-15')))->take(100);
+                $attendances = collect($zk->getAttendance())->where('timestamp','>=',date('Y-m-d 00:00:00',strtotime('2024-02-15')));
             }
             dd($attendances);
             $requestContent = [
