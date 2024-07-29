@@ -75,7 +75,7 @@ class AttendanceController extends Controller
             }
             else
             {
-                $attendances = collect($zk->getAttendance())->where('timestamp','>=',date('Y-m-d 00:00:00',strtotime('2024-02-15')));
+                $attendances = collect($zk->getAttendance())->where('timestamp','>=',date('Y-m-d 00:00:00',strtotime('2024-07-01')));
             }
             $requestContent = [
                 'headers' => [
