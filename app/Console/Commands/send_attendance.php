@@ -80,6 +80,7 @@ class send_attendance extends Command
     
                     Attendance::where('employee_code',$att->emp_code)
                     ->whereBetween('time_in',[$time_in_before,$time_in_after])
+                    ->where('time_out','<=',$time_in_after)
                     ->update($update);
     
                     if($attendance_in ==  null)
