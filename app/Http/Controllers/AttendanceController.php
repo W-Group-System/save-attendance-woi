@@ -156,7 +156,10 @@ class AttendanceController extends Controller
                     
                     Attendance::where('employee_code',$att->emp_code)
                     ->whereBetween('time_in',[$time_in_before,$time_in_after])
-                    ->where('time_out','<=',$time_in_after)
+                    ->where(function ($query) use ($time_in_after) {
+                        $query->where('time_out', '<=', $time_in_after)
+                              ->orWhereNull('time_out');
+                    })
                     ->update($update);
     
                     if($attendance_in ==  null)
