@@ -112,19 +112,28 @@ class AttendanceController extends Controller
         }
 
     }
-    public function store_attendance()
+    public function store_attendance(Request $request)
     {
         ini_set('memory_limit', '-1');
+       
         $attendance = Attendance::orderBy('last_id','desc')->first();
-
-        if($attendance == null)
+        if($request->date_from)
         {
-            $attendances = AttendanceLog::orderBy('id','asc')->get()->take(300);
+            $attendances = AttendanceLog::whereBetween('date',[$request->date_from,$request->date_to])->orderBy('datetime','asc')->get();
         }
         else
         {
-            $attendances = AttendanceLog::where('id','>',$attendance->last_id)->orderBy('id','asc')->get();
-        }
+
+     
+            if($attendance == null)
+            {
+                $attendances = AttendanceLog::orderBy('id','asc')->get()->take(300);
+            }
+            else
+            {
+                $attendances = AttendanceLog::where('id','>',$attendance->last_id)->orderBy('id','asc')->get();
+            }
+        }   
         // dd($attendances);
         foreach($attendances as $att)
         {
