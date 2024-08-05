@@ -115,11 +115,12 @@ class AttendanceController extends Controller
     public function store_attendance(Request $request)
     {
         ini_set('memory_limit', '-1');
-       dd($request->all());
+    //    dd($request->all());
         $attendance = Attendance::orderBy('last_id','desc')->first();
         if($request->date_from)
         {
             $attendances = AttendanceLog::whereBetween('date',[$request->date_from,$request->date_to])->orderBy('datetime','asc')->get();
+            dd($request->all());
         }
         else
         {
