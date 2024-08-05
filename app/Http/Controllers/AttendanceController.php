@@ -135,7 +135,7 @@ class AttendanceController extends Controller
                 $attendances = AttendanceLog::where('id','>',$attendance->last_id)->orderBy('id','asc')->get();
             }
         }   
-        dd($attendances->count());
+        // dd($attendances->count());
         foreach($attendances as $att)
         {
                 if($att->type == 0)
