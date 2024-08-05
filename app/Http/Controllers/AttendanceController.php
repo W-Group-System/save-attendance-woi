@@ -120,7 +120,7 @@ class AttendanceController extends Controller
         if($request->date_from)
         {
             $attendances = AttendanceLog::whereBetween('date',[$request->date_from,$request->date_to])->orderBy('datetime','asc')->get();
-            dd($request->all());
+            // dd($request->all());
         }
         else
         {
@@ -135,7 +135,7 @@ class AttendanceController extends Controller
                 $attendances = AttendanceLog::where('id','>',$attendance->last_id)->orderBy('id','asc')->get();
             }
         }   
-        // dd($attendances);
+        dd($attendances->count());
         foreach($attendances as $att)
         {
                 if($att->type == 0)
