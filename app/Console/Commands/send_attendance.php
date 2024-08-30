@@ -54,6 +54,21 @@ class send_attendance extends Command
         {
                 if($att->type == 0)
                 {
+                    $time_in_after = date('Y-m-d H:i:s',strtotime($att->datetime));
+                    $time_in_before = date('Y-m-d H:i:s', strtotime ( '+16 hour' , strtotime ( $time_in_after ) )) ;
+                    $update = [
+                        'time_in' =>  date('Y-m-d H:i:s', strtotime($att->datetime)),
+                        'device_in' => $att->location ." - ".$att->ip_address,
+                        'last_id' =>$att->id,
+                    ];
+                    Attendance::where('employee_code',$att->emp_code)
+                    ->whereBetween('time_out',[$time_in_after,$time_in_before])
+                    ->where(function ($query) use ($time_in_after) {
+                        $query->where('time_in', '>=', $time_in_after)
+                              ->orWhereNull('time_in');
+                    })
+                    ->update($update);
+                    
                     $attend = Attendance::where('employee_code',$att->emp_code)->where('time_in',date('Y-m-d H:i:s', strtotime($att->datetime)))->first();
                     if($attend == null)
                     {
@@ -64,6 +79,8 @@ class send_attendance extends Command
                         $attendance->last_id = $att->id;
                         $attendance->save();
                     }
+
+
                 }
                 else
                 {
