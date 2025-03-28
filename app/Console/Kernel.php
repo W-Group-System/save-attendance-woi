@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
         if(config('app.device') == "Pasig - HO")
         {
             // $schedule->command('command:get_attendance_hk')->everyMinute();
-            $schedule->command('command:get_attendance')->everyMinute();
+            // $schedule->command('command:get_attendance')->everyMinute();
             $schedule->command('command:send_attendance')->everyMinute();
         }
         else{
