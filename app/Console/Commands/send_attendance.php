@@ -50,7 +50,7 @@ class send_attendance extends Command
         {
             $attendances = AttendanceLog::where('id','>',$attendance->last_id)->where('location','!=','System')->orderBy('id','asc')->get()->take(500);
         }
-        // info($attendances->toArray());
+        info($attendances->toArray());
         // dd($attendances);
         foreach($attendances as $att)
         {
