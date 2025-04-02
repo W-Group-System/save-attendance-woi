@@ -72,15 +72,14 @@ class send_attendance extends Command
                     ->update($update);
                     
                     $attend = Attendance::where('employee_code',$att->emp_code)->where('time_in',date('Y-m-d H:i:s', strtotime($att->datetime)))->first();
-                    if($attend == null)
-                    {
-                        $attendance = new Attendance;
-                        $attendance->employee_code  = $att->emp_code;   
-                        $attendance->time_in = date('Y-m-d H:i:s',strtotime($att->datetime));
-                        $attendance->device_in = $att->location ." - ".$att->ip_address;
-                        $attendance->last_id = $att->id;
-                        $attendance->save();
-                    }
+                   
+                    $attendance = new Attendance;
+                    $attendance->employee_code  = $att->emp_code;   
+                    $attendance->time_in = date('Y-m-d H:i:s',strtotime($att->datetime));
+                    $attendance->device_in = $att->location ." - ".$att->ip_address;
+                    $attendance->last_id = $att->id;
+                    $attendance->save();
+                    
 
 
                 }
