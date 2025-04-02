@@ -44,11 +44,11 @@ class send_attendance extends Command
 
         if($attendance == null)
         {
-            $attendances = AttendanceLog::orderBy('id','asc')->where('location','!=','System')->get()->take(200);
+            $attendances = AttendanceLog::orderBy('id','asc')->where('location','!=','System')->get()->take(500);
         }
         else
         {
-            $attendances = AttendanceLog::where('id','>',$attendance->last_id)->where('location','!=','System')->orderBy('id','asc')->get()->take(200);
+            $attendances = AttendanceLog::where('id','>',$attendance->last_id)->where('location','!=','System')->orderBy('id','asc')->get()->take(500);
         }
         // info($attendances->toArray());
         // dd($attendances);
