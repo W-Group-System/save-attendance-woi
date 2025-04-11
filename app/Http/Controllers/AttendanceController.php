@@ -145,7 +145,7 @@ class AttendanceController extends Controller
                     $update = [
                         'time_in' =>  date('Y-m-d H:i:s', strtotime($att->datetime)),
                         'device_in' => $att->location ." - ".$att->ip_address,
-                        'last_id' =>$att->id,
+                        // 'last_id' =>$att->id,
                     ];
                     Attendance::where('employee_code',$att->emp_code)
                     ->whereBetween('time_out',[$time_in_after,$time_in_before])
@@ -161,7 +161,7 @@ class AttendanceController extends Controller
                         $attendance->employee_code  = $att->emp_code;   
                         $attendance->time_in = date('Y-m-d H:i:s',strtotime($att->datetime));
                         $attendance->device_in = $att->location ." - ".$att->ip_address;
-                        $attendance->last_id = $att->id;
+                        // $attendance->last_id = $att->id;
                         $attendance->save();
                     }
                 }
@@ -172,7 +172,7 @@ class AttendanceController extends Controller
                     $update = [
                         'time_out' =>  date('Y-m-d H:i:s', strtotime($att->datetime)),
                         'device_out' => $att->location ." - ".$att->ip_address,
-                        'last_id' =>$att->id,
+                        // 'last_id' =>$att->id,
                     ];
     
                     $attendance_in = Attendance::where('employee_code',$att->emp_code)
@@ -192,7 +192,7 @@ class AttendanceController extends Controller
                         $attendance->employee_code  = $att->emp_code;   
                         $attendance->time_out = date('Y-m-d H:i:s', strtotime($att->datetime));
                         $attendance->device_out = $att->location ." - ".$att->ip_address;
-                        $attendance->last_id = $att->id;
+                        // $attendance->last_id = $att->id;
                         $attendance->save(); 
                     }
     
