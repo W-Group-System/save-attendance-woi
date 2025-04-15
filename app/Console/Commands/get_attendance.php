@@ -54,7 +54,7 @@ class get_attendance extends Command
             $request = $client->get($system."/get-last-id/".$add);
             
             $response = json_decode($request->getBody());
-            info($attendances->toArray());
+            // info($attendances->toArray());
             if($response->id)
             {
 
@@ -64,7 +64,7 @@ class get_attendance extends Command
             {
                 $attendances = $attendances->where('timestamp','>=',date('Y-m-d 00:00:00',strtotime('2024-07-01')))->take(200);
             }
-            info($attendances->toArray());
+            // info($attendances->toArray());
             $requestContent = [
                 'headers' => [
                     'Accept' => 'application/json',
