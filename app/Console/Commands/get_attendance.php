@@ -54,6 +54,7 @@ class get_attendance extends Command
             $request = $client->get($system."/get-last-id/".$add);
             
             $response = json_decode($request->getBody());
+            info($response->toArray());
             if($response->id)
             {
 
