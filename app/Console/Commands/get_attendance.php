@@ -57,12 +57,13 @@ class get_attendance extends Command
             if($response->id)
             {
 
-                $attendances = $attendances->where('timestamp','>=',$response->id)->take(100);
+                $attendances = $attendances->where('timestamp','>=',$response->id)->take(200);
             }
             else
             {
-                $attendances = $attendances->where('timestamp','>=',date('Y-m-d 00:00:00',strtotime('2024-07-01')))->take(100);
+                $attendances = $attendances->where('timestamp','>=',date('Y-m-d 00:00:00',strtotime('2024-07-01')))->take(200);
             }
+            info($attendances->toArray());
             $requestContent = [
                 'headers' => [
                     'Accept' => 'application/json',
