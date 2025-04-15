@@ -26,9 +26,9 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        if(config('app.device') == "Pasig")
+        if(config('app.device') == "HIK")
         {
-            // $schedule->command('command:get_attendance_hk')->everyMinute();
+            $schedule->command('command:get_attendance_hk')->everyMinute();
             // $schedule->command('command:get_attendance')->everyMinute();
             $schedule->command('command:send_attendance')->everyMinute();
         }
