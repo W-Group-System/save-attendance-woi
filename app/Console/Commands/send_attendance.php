@@ -39,6 +39,8 @@ class send_attendance extends Command
     public function handle()
     {
         //
+        ini_set('memory_limit', '-1');
+
         info("START Get Attendance Store");
         $attendance = Attendance::orderBy('last_id','desc')->first();
 
