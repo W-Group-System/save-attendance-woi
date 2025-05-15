@@ -39,6 +39,7 @@ class send_attendance extends Command
     public function handle()
     {
         //
+        $not_allowed = ['System', 'Head Office'];
         ini_set('memory_limit', '-1');
 
         info("START Get Attendance Store");
@@ -46,11 +47,11 @@ class send_attendance extends Command
 
         if($attendance == null)
         {
-            $attendances = AttendanceLog::orderBy('id','asc')->where('location','!=','System')->get()->take(100);
+            $attendances = AttendanceLog::orderBy('id','asc')->whereNotIn('location', $not_allowed)->get()->take(100);
         }
         else
         {
-            $attendances = AttendanceLog::where('id','>',$attendance->last_id)->where('location','!=','System')->orderBy('id','asc')->get()->take(100);
+            $attendances = AttendanceLog::where('id','>',$attendance->last_id)->whereNotIn('location', $not_allowed)->orderBy('id','asc')->get()->take(100);
         }
         // info($attendances->toArray());
         // dd($attendances);
