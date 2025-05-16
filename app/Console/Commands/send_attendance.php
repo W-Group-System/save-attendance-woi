@@ -43,84 +43,84 @@ class send_attendance extends Command
 
         info("START Get Attendance Store");
         $attendance = Attendance::orderBy('last_id','desc')->first();
-
+        
         if($attendance == null)
         {
             // $attendances = AttendanceLog::orderBy('id','asc')->where('location','!=','System')->get()->take(100);
-            $attendances = AttendanceLog::orderBy('id','asc')->where('location','!=','System')->take(100)->get();
+            $attendances = AttendanceLog::orderBy('id','asc')->where('location','Head Office')->take(100)->get();
         }
         else
         {
             // $attendances = AttendanceLog::where('id','>',$attendance->last_id)->where('location','!=','System')->orderBy('id','asc')->get()->take(100);
-            $attendances = AttendanceLog::where('id','>',$attendance->last_id)->where('location','!=','System')->orderBy('id','asc')->take(100)->get();
+            $attendances = AttendanceLog::where('id','>',$attendance->last_id)->where('location','Head Office')->orderBy('id','asc')->take(10)->get();
         }
-        // info($attendances->toArray());
+        info($attendances->toArray());
         // dd($attendances);
-        foreach($attendances as $att)
-        {
-                if($att->type == 0)
-                {
-                    $time_in_after = date('Y-m-d H:i:s',strtotime($att->datetime));
-                    $time_in_before = date('Y-m-d H:i:s', strtotime ( '+16 hour' , strtotime ( $time_in_after ) )) ;
-                    $update = [
-                        'time_in' =>  date('Y-m-d H:i:s', strtotime($att->datetime)),
-                        'device_in' => $att->location ." - ".$att->ip_address,
-                        'last_id' =>$att->id,
-                    ];
-                    Attendance::where('employee_code',$att->emp_code)
-                    ->whereBetween('time_out',[$time_in_after,$time_in_before])
-                    ->where(function ($query) use ($time_in_after) {
-                        $query->where('time_in', '>=', $time_in_after)
-                              ->orWhereNull('time_in');
-                    })
-                    ->update($update);
+        // foreach($attendances as $att)
+        // {
+        //         if($att->type == 0)
+        //         {
+        //             $time_in_after = date('Y-m-d H:i:s',strtotime($att->datetime));
+        //             $time_in_before = date('Y-m-d H:i:s', strtotime ( '+16 hour' , strtotime ( $time_in_after ) )) ;
+        //             $update = [
+        //                 'time_in' =>  date('Y-m-d H:i:s', strtotime($att->datetime)),
+        //                 'device_in' => $att->location ." - ".$att->ip_address,
+        //                 'last_id' =>$att->id,
+        //             ];
+        //             Attendance::where('employee_code',$att->emp_code)
+        //             ->whereBetween('time_out',[$time_in_after,$time_in_before])
+        //             ->where(function ($query) use ($time_in_after) {
+        //                 $query->where('time_in', '>=', $time_in_after)
+        //                       ->orWhereNull('time_in');
+        //             })
+        //             ->update($update);
                     
-                    $attend = Attendance::where('employee_code',$att->emp_code)->where('time_in',date('Y-m-d H:i:s', strtotime($att->datetime)))->first();
+        //             $attend = Attendance::where('employee_code',$att->emp_code)->where('time_in',date('Y-m-d H:i:s', strtotime($att->datetime)))->first();
                    
-                    $attendance = new Attendance;
-                    $attendance->employee_code  = $att->emp_code;   
-                    $attendance->time_in = date('Y-m-d H:i:s',strtotime($att->datetime));
-                    $attendance->device_in = $att->location ." - ".$att->ip_address;
-                    $attendance->last_id = $att->id;
-                    $attendance->save();
+        //             $attendance = new Attendance;
+        //             $attendance->employee_code  = $att->emp_code;   
+        //             $attendance->time_in = date('Y-m-d H:i:s',strtotime($att->datetime));
+        //             $attendance->device_in = $att->location ." - ".$att->ip_address;
+        //             $attendance->last_id = $att->id;
+        //             $attendance->save();
                     
 
 
-                }
-                else
-                {
-                    $time_in_after = date('Y-m-d H:i:s',strtotime($att->datetime));
-                    $time_in_before = date('Y-m-d H:i:s', strtotime ( '-16 hour' , strtotime ( $time_in_after ) )) ;
-                    $update = [
-                        'time_out' =>  date('Y-m-d H:i:s', strtotime($att->datetime)),
-                        'device_out' => $att->location ." - ".$att->ip_address,
-                        'last_id' =>$att->id,
-                    ];
+        //         }
+        //         else
+        //         {
+        //             $time_in_after = date('Y-m-d H:i:s',strtotime($att->datetime));
+        //             $time_in_before = date('Y-m-d H:i:s', strtotime ( '-16 hour' , strtotime ( $time_in_after ) )) ;
+        //             $update = [
+        //                 'time_out' =>  date('Y-m-d H:i:s', strtotime($att->datetime)),
+        //                 'device_out' => $att->location ." - ".$att->ip_address,
+        //                 'last_id' =>$att->id,
+        //             ];
     
-                    $attendance_in = Attendance::where('employee_code',$att->emp_code)
-                    ->whereBetween('time_in',[$time_in_before,$time_in_after])->first();
+        //             $attendance_in = Attendance::where('employee_code',$att->emp_code)
+        //             ->whereBetween('time_in',[$time_in_before,$time_in_after])->first();
     
-                    Attendance::where('employee_code',$att->emp_code)
-                    ->whereBetween('time_in',[$time_in_before,$time_in_after])
-                    ->where(function ($query) use ($time_in_after) {
-                        $query->where('time_out', '<=', $time_in_after)
-                              ->orWhereNull('time_out');
-                    })
-                    ->update($update);
+        //             Attendance::where('employee_code',$att->emp_code)
+        //             ->whereBetween('time_in',[$time_in_before,$time_in_after])
+        //             ->where(function ($query) use ($time_in_after) {
+        //                 $query->where('time_out', '<=', $time_in_after)
+        //                       ->orWhereNull('time_out');
+        //             })
+        //             ->update($update);
     
-                    if($attendance_in ==  null)
-                    {
-                        $attendance = new Attendance;
-                        $attendance->employee_code  = $att->emp_code;   
-                        $attendance->time_out = date('Y-m-d H:i:s', strtotime($att->datetime));
-                        $attendance->device_out = $att->location ." - ".$att->ip_address;
-                        $attendance->last_id = $att->id;
-                        $attendance->save(); 
-                    }
+        //             if($attendance_in ==  null)
+        //             {
+        //                 $attendance = new Attendance;
+        //                 $attendance->employee_code  = $att->emp_code;   
+        //                 $attendance->time_out = date('Y-m-d H:i:s', strtotime($att->datetime));
+        //                 $attendance->device_out = $att->location ." - ".$att->ip_address;
+        //                 $attendance->last_id = $att->id;
+        //                 $attendance->save(); 
+        //             }
     
-                }
+        //         }
           
-        }
+        // }
         info("End Get Attendance Store");
     }
 }
