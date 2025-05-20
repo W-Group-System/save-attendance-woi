@@ -55,7 +55,7 @@ class send_attendance extends Command
             $attendances = AttendanceLog::where('id','>',$attendance->last_id)->where('location','Head Office')->orderBy('id','asc')->get()->chunk(100);
         }
         // info($attendances->toArray());
-        dd($attendances);
+        
         foreach($attendances as $att)
         {
                 if($att->type == 0)
