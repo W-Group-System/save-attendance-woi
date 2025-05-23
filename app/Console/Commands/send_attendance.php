@@ -41,9 +41,9 @@ class send_attendance extends Command
         //
         ini_set('memory_limit', '-1');
 
-        info("START Get Attendance Store");
+        info("START Get Attendance Store in Head Office");
         $attendance = Attendance::orderBy('last_id','desc')->first();
-        $location = env('LOCATION');
+        // $location = env('LOCATION');
         if($attendance == null)
         {
             // $attendances = AttendanceLog::orderBy('id','asc')->where('location','!=','System')->get()->take(100);
@@ -121,6 +121,6 @@ class send_attendance extends Command
                 }
           
         }
-        info("End Get Attendance Store");
+        info("End Get Attendance Store in Head Office");
     }
 }

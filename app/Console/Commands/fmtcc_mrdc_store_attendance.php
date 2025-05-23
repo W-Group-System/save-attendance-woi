@@ -41,7 +41,7 @@ class fmtcc_mrdc_store_attendance extends Command
     {
         ini_set('memory_limit', '-1');
 
-        info("START Get Attendance Store");
+        info("START Get Attendance Store in MRDC/FMTCC");
         $attendance = Attendance::orderBy('last_id','desc')->first();
         if($attendance == null)
         {
@@ -118,6 +118,6 @@ class fmtcc_mrdc_store_attendance extends Command
                 }
           
         }
-        info("End Get Attendance Store");
+        info("End Get Attendance Store in MRDC/FMTCC");
     }
 }
