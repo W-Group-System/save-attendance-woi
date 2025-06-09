@@ -13,7 +13,7 @@ class pbi_store_attendance extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'command:pbi_store_attendance';
 
     /**
      * The console command description.

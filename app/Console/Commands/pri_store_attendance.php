@@ -13,7 +13,7 @@ class pri_store_attendance extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'command:pri_store_attendance';
 
     /**
      * The console command description.
