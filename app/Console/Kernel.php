@@ -36,7 +36,7 @@ class Kernel extends ConsoleKernel
         //     $schedule->command('command:get_attendance')->everyMinute();
         // }
         $schedule->command('command:send_attendance')->everyMinute();
-        // $schedule->command('command:whi_carmona_save_attendance')->everyMinute();
+        $schedule->command('command:whi_carmona_save_attendance')->everyMinute();
         // $schedule->command('command:fmtcc_mrdc_store_attendance')->everyMinute();
     }
 
