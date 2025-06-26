@@ -43,8 +43,8 @@ class Kernel extends ConsoleKernel
         // $schedule->command('command:wcc_store_attendance')->everyMinute();
         // $schedule->command('command:wfa_store_attendance')->everyMinute();
         // $schedule->command('command:wgc_store_attendance')->everyMinute();
-        // $schedule->command('command:woi_store_attendance')->everyMinute();
-        $schedule->command('command:wtcc_store_attendance')->everyMinute();
+        $schedule->command('command:woi_store_attendance')->everyMinute();
+        // $schedule->command('command:wtcc_store_attendance')->everyMinute();
 
         // $schedule->command('command:fmtcc_mrdc_store_attendance')->everyMinute();
     }
